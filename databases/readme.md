@@ -1,0 +1,1 @@
+each dir contains ddl and dml respectively
