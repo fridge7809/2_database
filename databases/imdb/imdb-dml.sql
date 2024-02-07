@@ -1,0 +1,68 @@
+-- Task 1 output 52759
+SELECT COUNT(*) AS RECORDS_WITHOUT_DEATHDATE
+FROM PERSON P
+WHERE P.DEATHDATE IS NULL;
+
+-- Task 2 output 26
+SELECT COUNT(*)
+FROM (SELECT M.ID
+      FROM MOVIE M
+               JOIN INVOLVED I ON I.MOVIEID = M.ID
+               JOIN PERSON P ON P.ID = I.PERSONID
+      WHERE M.LANGUAGE = 'Portuguese'
+      GROUP BY M.ID
+      HAVING AVG(P.HEIGHT) > 175) AS QUERY;
+
+-- Task 3 output 14
+SELECT COUNT(*)
+FROM (SELECT MOVIEID, GENRE, COUNT(*)
+      FROM MOVIE_GENRE M
+      WHERE GENRE = 'Thriller'
+      GROUP BY M.MOVIEID, M.GENRE
+      HAVING COUNT(*) > 1) AS QUERY;
+
+-- Task 4 output 129
+SELECT COUNT(DISTINCT I2.PERSONID) AS NUMBER_OF_ACTORS
+FROM PERSON P
+         JOIN INVOLVED I ON I.PERSONID = P.ID
+         JOIN INVOLVED I2 ON I2.MOVIEID = I.MOVIEID
+WHERE P.NAME = 'Akira Kurosawa'
+  AND I.ROLE = 'director'
+  AND I2.ROLE = 'actor';
+
+-- Tak 5 output 26
+SELECT COUNT(*) AS MOVIECOUNT
+FROM (SELECT M.ID AS MOVIEID
+      FROM INVOLVED I
+               JOIN MOVIE M ON I.MOVIEID = M.ID
+      WHERE I.ROLE = 'actor'
+        AND M.YEAR = '2005'
+      GROUP BY M.ID
+      HAVING COUNT(I.PERSONID) = 2) AS TWO;
+
+-- Task 6 output 8
+SELECT COUNT(*) AS COLLABS
+FROM (SELECT I.PERSONID, I2.PERSONID
+      FROM INVOLVED I
+               JOIN INVOLVED I2 ON I2.MOVIEID = I.MOVIEID
+      WHERE I2.ROLE = 'director'
+        AND I.PERSONID <> I2.PERSONID
+        AND I.ROLE = 'actor'
+      GROUP BY I.PERSONID, I2.PERSONID
+      HAVING COUNT(I.MOVIEID) > 15) AS QUERY;
+
+-- Task 7 output 291
+SELECT COUNT(DISTINCT M.ID) AS MOVIE_COUNT
+FROM MOVIE M
+         JOIN INVOLVED I1 ON I1.MOVIEID = M.ID AND I1.ROLE = 'actor'
+         JOIN INVOLVED I2 ON I2.MOVIEID = M.ID AND I2.ROLE = 'director'
+WHERE M.YEAR = 2004;
+
+-- Task 8 output 9693
+SELECT COUNT(*)
+FROM (SELECT I.personid, 'Popular' AS category
+      FROM genre G
+               JOIN movie_genre MG ON G.genre = MG.genre AND G.category = 'Popular'
+               JOIN involved I ON MG.movieid = I.movieid
+      GROUP BY I.personid, G.category
+      HAVING COUNT(DISTINCT MG.genre) = (SELECT COUNT(DISTINCT genre) FROM genre WHERE category = 'Popular')) AS sub;
