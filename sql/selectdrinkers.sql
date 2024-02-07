@@ -1,1 +1,0 @@
-select * from ratings r join drinker d on d.drinker_id = r.drinker_id where d.age >= 24;
