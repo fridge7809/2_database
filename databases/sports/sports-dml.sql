@@ -1,132 +1,136 @@
 -- Task 1
-SELECT S.NAME, S.RECORD AS SORTED
-FROM SPORTS S
-ORDER BY S.NAME ASC;
+SELECT s.name, s.record AS sorted
+FROM sports s
+ORDER BY s.name ASC;
 
 -- Task 2
-SELECT S.NAME AS ONE_RESULT
-FROM SPORTS S
-         JOIN RESULTS R ON R.SPORTID = S.ID
-GROUP BY S.NAME;
+SELECT s.name AS one_result
+FROM sports s
+		 JOIN results r ON r.sportid = s.id
+GROUP BY s.name;
 
 -- task 3 number of athletes that competed in 1 sport
-SELECT COUNT(DISTINCT R.PEOPLEID) AS ATHELETES_COMPETED
-FROM RESULTS R;
+SELECT COUNT(DISTINCT r.peopleid) AS atheletes_competed
+FROM results r;
 
 -- task 4 The ID and name of athletes who have at least twenty results.
-SELECT P.ID, P.NAME
-FROM PEOPLE P
-         JOIN RESULTS R ON R.PEOPLEID = P.ID
-GROUP BY P.ID, P.NAME
-HAVING COUNT(R.PEOPLEID) >= 20;
+SELECT p.id, p.name
+FROM people p
+		 JOIN results r ON r.peopleid = p.id
+GROUP BY p.id, p.name
+HAVING COUNT(r.peopleid) >= 20;
 
 -- task 5 The ID, name and gender description of all athletes that currently hold a record.
-SELECT P.ID, P.NAME, G.DESCRIPTION
-FROM PEOPLE P
-         JOIN RESULTS R ON R.PEOPLEID = P.ID
-         JOIN GENDER G ON G.GENDER = P.GENDER
-         JOIN SPORTS S ON S.ID = R.SPORTID
-WHERE R.RESULT = S.RECORD
-GROUP BY P.ID, P.NAME,
-         G.DESCRIPTION;
+SELECT p.id, p.name, g.description
+FROM people p
+		 JOIN results r ON r.peopleid = p.id
+		 JOIN gender g ON g.gender = p.gender
+		 JOIN sports s ON s.id = r.sportid
+WHERE r.result = s.record
+GROUP BY p.id, p.name,
+		 g.description;
 
 -- task 6 wrong todo fix
-SELECT S.NAME   AS SPORT,
-       COUNT(*) AS NUMATHLETES
-FROM SPORTS S
-         JOIN RESULTS R ON R.SPORTID = S.ID
-WHERE R.RESULT = S.RECORD
-GROUP BY S.ID,
-         R.PEOPLEID;
+SELECT s.name   AS sport,
+	   COUNT(*) AS numathletes
+FROM sports s
+		 JOIN results r ON r.sportid = s.id
+WHERE r.result = s.record
+GROUP BY s.id,
+		 r.peopleid;
 
 -- Task 7 convert floating point to double digit precision
-SELECT P.ID,
-       P.NAME,
-       MAX(R.RESULT)   AS BEST,
-       TO_CHAR(S.RECORD - MAX(R.RESULT),
-               '0D99') AS DIFF
-FROM PEOPLE P
-         JOIN RESULTS R ON R.PEOPLEID = P.ID
-         JOIN SPORTS S ON S.ID = R.SPORTID
-WHERE S.NAME = 'Triple Jump'
-GROUP BY P.ID, S.RECORD
+SELECT p.id,
+	   p.name,
+	   MAX(r.result)   AS best,
+	   TO_CHAR(s.record - MAX(r.result),
+			   '0D99') AS diff
+FROM people p
+		 JOIN results r ON r.peopleid = p.id
+		 JOIN sports s ON s.id = r.sportid
+WHERE s.name = 'Triple Jump'
+GROUP BY p.id, s.record
 HAVING COUNT(*) >= 20;
 
 -- Task 8 extract year from date
-SELECT P.ID, P.NAME, G.DESCRIPTION
-FROM PEOPLE P
-         JOIN RESULTS R ON R.PEOPLEID = P.ID
-         JOIN COMPETITIONS C ON C.ID = R.COMPETITIONID
-         JOIN GENDER G ON G.GENDER = P.GENDER
-WHERE C.PLACE like 'Hvide Sande'
+SELECT p.id, p.name, g.description
+FROM people p
+		 JOIN results r ON r.peopleid = p.id
+		 JOIN competitions c ON c.id = r.competitionid
+		 JOIN gender g ON g.gender = p.gender
+WHERE c.place LIKE 'Hvide Sande'
   AND DATE_PART('year',
-                C.HELD) = 2009
-GROUP BY P.ID,
-         G.DESCRIPTION;
+				c.held) = 2009
+GROUP BY p.id,
+		 g.description;
 
 -- Task 9 string splitting
-SELECT P.NAME, G.DESCRIPTION
-FROM PEOPLE P
-         JOIN GENDER G ON G.GENDER = P.GENDER
-WHERE SPLIT_PART(P.NAME,
-                 ' ', 2) LIKE 'J%sen'
-GROUP BY P.NAME, G.DESCRIPTION
-ORDER BY P.NAME ASC;
+SELECT p.name, g.description
+FROM people p
+		 JOIN gender g ON g.gender = p.gender
+WHERE SPLIT_PART(p.name,
+				 ' ', 2) LIKE 'J%sen'
+GROUP BY p.name, g.description
+ORDER BY p.name ASC;
 
 -- Task 10 percentage formatting
-SELECT P.NAME,
-       S.NAME,
-       CONCAT(TO_CHAR((ROUND((R.RESULT / S.RECORD) * 100)), '999'), '%') AS PERCENTAGE
-FROM RESULTS R
-         JOIN PEOPLE P ON P.ID = R.PEOPLEID
-         JOIN SPORTS S ON S.ID = R.SPORTID;
+SELECT p.name,
+	   s.name,
+	   CONCAT(TO_CHAR((ROUND((r.result / s.record) * 100)), '999'), '%') AS percentage
+FROM results r
+		 JOIN people p ON p.id = r.peopleid
+		 JOIN sports s ON s.id = r.sportid;
 
 -- Task 11 find null values
-SELECT COUNT(DISTINCT P.ID) AS INCOMPLETE_COUNT
-FROM PEOPLE P
-         JOIN RESULTS R ON R.PEOPLEID = P.ID
-WHERE R.RESULT IS NULL;
+SELECT COUNT(DISTINCT p.id) AS incomplete_count
+FROM people p
+		 JOIN results r ON r.peopleid = p.id
+WHERE r.result IS NULL;
 
 
 -- Task 12 numeric type formatting
-SELECT S.ID,
-       S.NAME,
-       TO_CHAR(S.RECORD,
-               'FM990D00') AS MAXRES
-FROM SPORTS S
-ORDER BY S.ID;
+SELECT s.id,
+	   s.name,
+	   TO_CHAR(s.record,
+			   'FM990D00') AS maxres
+FROM sports s
+ORDER BY s.id;
 
 -- Task 13
-SELECT P.ID,
-       P.NAME,
-       COUNT(*) AS RESULTS
-FROM PEOPLE P
-         JOIN RESULTS R ON R.PEOPLEID = P.ID
-         JOIN SPORTS S ON S.ID = R.SPORTID
-WHERE S.RECORD = R.RESULT
-GROUP BY P.ID
-HAVING COUNT(DISTINCT S.ID) >= 2;
+SELECT p.id,
+	   p.name,
+	   COUNT(*) AS results
+FROM people p
+		 JOIN results r ON r.peopleid = p.id
+		 JOIN sports s ON s.id = r.sportid
+WHERE s.record = r.result
+GROUP BY p.id
+HAVING COUNT(DISTINCT s.id) >= 2;
 
 -- Task 14 todo fix
 
 -- bool -> int cast, where in sub query
 --SELECT p.id, p.name, p.height, cast((s.record = r.result) as int) as "record?"
-SELECT P.ID,
-       P.NAME,
-       P.HEIGHT,
-       r.result,
-       s.name,
-       CASE
-           WHEN (S.RECORD = R.RESULT) THEN 'true'
-           ELSE 'false'
-           END AS "record?"
-FROM RESULTS R
-         JOIN PEOPLE P ON P.ID = R.PEOPLEID
-         JOIN SPORTS S ON S.ID = R.SPORTID
-WHERE R.RESULT IN
-      (SELECT MAX(R.RESULT)
-       FROM COMPETITIONS C
-                JOIN RESULTS R ON R.COMPETITIONID = C.ID
-                JOIN SPORTS S ON S.ID = R.SPORTID
-       GROUP BY S.ID)
-GROUP BY P.ID, S.RECORD, R.RESULT;
+SELECT p.id,
+	   p.name,
+	   p.height,
+	   r.result,
+	   s.name,
+	   CASE
+		   WHEN (s.record = r.result) THEN 'true'
+		   ELSE 'false'
+		   END AS "record?"
+FROM results r
+		 JOIN people p ON p.id = r.peopleid
+		 JOIN sports s ON s.id = r.sportid
+WHERE r.result IN
+	  (SELECT MAX(r.result)
+	   FROM competitions c
+				JOIN results r ON r.competitionid = c.id
+				JOIN sports s ON s.id = r.sportid
+	   GROUP BY s.id)
+GROUP BY p.id, s.record, r.result;
+
+SELECT *
+FROM sports
+WHERE name
