@@ -39,8 +39,8 @@ DROP TABLE IF EXISTS rentals_new CASCADE;
 
 CREATE TABLE person
 (
-	id   integer PRIMARY KEY, -- formerly pid
-	name varchar(50) NOT NULL -- formerly pn
+    id   integer PRIMARY KEY, -- formerly pid
+    name varchar(50) NOT NULL -- formerly pn
 );
 
 INSERT INTO person
@@ -49,8 +49,8 @@ FROM rentals;
 
 CREATE TABLE zipcode
 (
-	zipcode integer PRIMARY KEY, -- formerly hz
-	city    varchar(50)          -- formerly hc
+    zipcode integer PRIMARY KEY, -- formerly hz
+    city    varchar(50)          -- formerly hc
 );
 
 INSERT INTO zipcode
@@ -59,9 +59,9 @@ FROM rentals;
 
 CREATE TABLE house
 (
-	id      integer PRIMARY KEY,  -- formerly hid
-	street  varchar(50) NOT NULL, -- formerly hs
-	zipcode integer REFERENCES zipcode (zipcode)
+    id      integer PRIMARY KEY,  -- formerly hid
+    street  varchar(50) NOT NULL, -- formerly hs
+    zipcode integer REFERENCES zipcode (zipcode)
 );
 
 INSERT INTO house
@@ -70,23 +70,22 @@ FROM rentals;
 
 CREATE TABLE rentals_new
 (
-	person_id integer REFERENCES person (id),
-	house_id  integer REFERENCES house (id),
-	year      integer NOT NULL, --s
-	PRIMARY KEY (person_id, house_id)
+    person_id integer REFERENCES person (id),
+    house_id  integer REFERENCES house (id),
+    year      integer NOT NULL, --s
+    PRIMARY KEY (person_id, house_id)
 );
 
 INSERT INTO rentals_new
 SELECT DISTINCT pid, hid, s
 FROM rentals;
 
-
 -- check they are equal
 SELECT count(*) AS new_count
 FROM rentals_new r
-		 JOIN person p ON r.person_id = p.id
-		 JOIN house h ON r.house_id = h.id
-		 JOIN zipcode z ON z.zipcode = h.zipcode;
+         JOIN person p ON r.person_id = p.id
+         JOIN house h ON r.house_id = h.id
+         JOIN zipcode z ON z.zipcode = h.zipcode;
 
 SELECT count(*) old_count
 FROM rentals r;
