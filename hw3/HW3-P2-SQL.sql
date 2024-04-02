@@ -51,6 +51,7 @@ CREATE TABLE Customers (
        EID INT NOT NULL,
        PRIMARY KEY (CID)
 );
+
 INSERT INTO Rentals (PID, HID, PN, S, HS, HZ, HC) 
 VALUES (18521, 21301, 'Sigurjon Elvarsson', 1984, 'Galghard Road', 109, 'Reykjavik (Breidholt)');
 INSERT INTO Rentals (PID, HID, PN, S, HS, HZ, HC) 
