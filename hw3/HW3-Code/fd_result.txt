@@ -1,5 +1,5 @@
- Rentals: pid --> pn | MAY HOLD
- Rentals: hid --> hs | MAY HOLD
- Rentals: hid --> hz | MAY HOLD
- Rentals: hid --> hc | MAY HOLD
- Rentals: hz --> hc | MAY HOLD
+ rentals: pid --> pn | MAY HOLD
+ rentals: hid --> hs | MAY HOLD
+ rentals: hid --> hz | MAY HOLD
+ rentals: hid --> hc | MAY HOLD
+ rentals: hz --> hc | MAY HOLD
