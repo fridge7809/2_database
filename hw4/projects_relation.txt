@@ -1,0 +1,13 @@
+                     Table "public.projects"
+ Column |         Type          | Collation | Nullable | Default 
+--------+-----------------------+-----------+----------+---------
+ id     | integer               |           | not null | 
+ pid    | integer               |           | not null | 
+ sid    | integer               |           | not null | 
+ sn     | character varying(50) |           | not null | 
+ pn     | character varying(50) |           | not null | 
+ mid    | integer               |           | not null | 
+ mn     | character varying(50) |           | not null | 
+Indexes:
+    "projects_pkey" PRIMARY KEY, btree (id, pid, sid)
+
