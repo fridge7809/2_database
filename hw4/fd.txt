@@ -1,0 +1,7 @@
+ projects: id --> mid | MAY HOLD
+ projects: id --> mn | MAY HOLD
+ projects: pid --> pn | MAY HOLD
+ projects: sid --> sn | MAY HOLD
+ projects: sn --> sid | MAY HOLD
+ projects: mid --> mn | MAY HOLD
+ projects: mn --> mid | MAY HOLD
