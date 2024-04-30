@@ -296,7 +296,7 @@ Hybrid between NSM and DSM.
 
 Assume we have an application with a OLTP workload (CRUD app), then we know we will have a more write-heavy workload, often inserting values where we need all attributes accessed at once.
 
-## Query processing
+## Query processingx$
 
 - sql is translated to relational algebra
 - there will be joins
@@ -320,4 +320,3 @@ may be optimized with index
 - SQL 1973-94
 - Transaction 1975
 - b+ trees and and query optimization in late 1970ies
-
