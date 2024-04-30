@@ -21,7 +21,7 @@ ddl:				        data definition language (queries, select, insert, update, delet
 dml:				        data manipulaiton language (schema definitions, indexes, triggers, functions, create table, alter table, drop table)
 division query:		  find y that has/sells/contains/etc **all** x
 indexes:			      data structures that optimizes read performance of database. **indexes may queries performant!**
-clustered index:	  store tuples that match a range condition together
+clustered index:	  store tuples that match a range condition together, stored together physically on disk
 covering index:	  	an index is covering if it covers the entire query (supplies everything that a query needs).
 bplus tree:			    a binary search tree that contains only keys (not kv pairs) where the leaf nodes contain data to be indexed as a linked list
 flush:              write transaction state to persiistent data
@@ -327,7 +327,6 @@ Web app data grows more than structured data, and it is not relational
 
 Logs, blobs, media
 
-
 Big data can be characterized by 5 properties, "the 5 V's":
 
 - Volume
@@ -335,6 +334,100 @@ Big data can be characterized by 5 properties, "the 5 V's":
 - Variety
 - Veracity
 - Value
+
+Analytics applications typically require (repeated)
+processing of whole datasets of unstructured data.
+
+This access pattern is not well served by SQL or NoSQL
+data systems
+
+
+### RDMBS
+
+- Pros
+
+Transactions, query processing (filtering), OLTP workloads
+
+- Cons
+
+No support for unstructured data or distributed processing, and not that relevant to big data except for ability to filter data
+
+### NoSQL - KV stores
+
+- Pros
+
+Distributed storage (horizontal scaling), can handle semi-structured and unstructured data equally well.
+Low latency for single items (key lookup)
+
+- Cons
+
+Cannot scan entire collection, no support for filtering or distributed parralel processing pipelines
+
+### NoSQL - Document stores
+
+- Pros
+
+Distributed storage (horizontal scaling), semi structured data.
+Low latency for single items (key lookup). Can filter documents
+
+- Cons
+
+Cannot scan entire collection, no support for filtering or distributed parralel processing pipelines
+
+### NoSQL - Graph stores
+
+- Pros
+
+Graph related application. May inherent strengths from other solutions
+
+- Cons
+
+May inherit weakness from other solutions
+
+## MapReduce / Spark / Hadoop and similar frameworks
+
+- Designed to handle requirements of big data, distributed processing
+- Takes advantage of functional programming to map reduce for parralel processing in a distributed system
+- Workload can be load balanced on cluster of nodes
+- Can handle very large datasets
+
+There is an IO operation for each map / reduce because the result is written to disk. This becomes slow for large map/reduce pipelines.
+
+- Pros
+
+Good for distributed storage and processing
+
+- Cons
+
+High latency on small requests, only suitable for distributed processing pipelines
+
+### Spark
+
+- Pros
+
+Spark proccesses in-momery unlike hadoop, becomes faster for complex pipelines.
+Also optimized for lazy evaluation
+Supports memory sharing between worker nodes. Becomes fast bcause the process is kept in memory.
+Works with Resilient Distributed Datasets, applications takes RDD's as input and output RDD's
+
+Supported operations:
+
+- map
+- flatmap
+- filter
+- union
+
+etc. 
+
+
+
+## Access patterns to data on disk
+
+- Too large for a single server, must be stored in a distributed system
+- We usually want to read all of the collection
+
+
+- SQL, regex
 
 ### Volume
 
