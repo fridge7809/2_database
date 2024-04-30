@@ -320,3 +320,43 @@ may be optimized with index
 - SQL 1973-94
 - Transaction 1975
 - b+ trees and and query optimization in late 1970ies
+
+## Big data management
+
+Web app data grows more than structured data, and it is not relational
+
+Logs, blobs, media
+
+
+Big data can be characterized by 5 properties, "the 5 V's":
+
+- Volume
+- Velocity
+- Variety
+- Veracity
+- Value
+
+### Volume
+
+Data is big when it exceeds capicity of architecture.
+The amount of datawarehouse 40 petabytes. 
+
+ebay: data
+
+### Velocity
+
+- The speed at which its generated. We need to process the data at the speeds its generated - particle accelerators.
+
+### Veracity
+
+- Quality or trustwortyness of the data, accuracy
+- Data cleaning takes time (chichi)
+
+### Variety
+
+- Fingerprint, logs, relational OTLP data, blobs, photos
+- Structured (oltp), Semi-strucutre (logs, books, comment threads), Unstructured 
+
+### Value
+
+- Monetary, societal
