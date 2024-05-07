@@ -4,7 +4,6 @@ SELECT count(*)
 FROM suppliers
 WHERE country <> 'USA';
 
-
 -- 5 How many products have been sold by suppliers from Tokyo?
 
 SELECT count(*)
@@ -29,7 +28,6 @@ FROM order_details od
 		 JOIN public.suppliers s ON p.supplier_id = s.supplier_id
 GROUP BY od.order_id
 HAVING count(DISTINCT s.country) = 1;
-
 
 -- 11 How many employees operate from all regions of Northwind?
 
@@ -56,15 +54,7 @@ VALUES (10, '30346');
 INSERT INTO employee_territories
 VALUES (10, '60601');
 
-SELECT
-FROM employees e
-		 JOIN employee_territories et ON e.employee_id = et.employee_id
-		 JOIN territories t ON et.territory_id = t.territory_id
-		 JOIN region r ON t.region_id = r.region_id
-HAVING count(DISTINCT r.region_id) = (SELECT count(DISTINCT r.region_id) FROM region);
-
-
--- 12 There are 22 orders with fewer than 30 products (quantity included) that have a freight above 50.0.
+-- 13 There are 22 orders with fewer than 30 products (quantity included) that have a freight above 50.0.
 -- How many orders are there with 10 or fewer products (quantity included) that have a freight that is more than 10.0?
 
 SELECT count(DISTINCT o.order_id)
