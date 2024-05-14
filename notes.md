@@ -1,13 +1,16 @@
 ## Dictionary
 
-prime attributes:   part of a candidate key
-non-prime:          not part of candidate key
-candidate key:      all other values of the relation can be derived (implied) from this key
+candidate key:      attribute or combination of attributes that uniquely defines a row in the table
+prime attributes:   an attribute that belongs to at least one candidate key
+non-prime:          an attribute that does not belong to any candidate key
+
 data integrity:     no data is lost
 redundancy:         data is stored in several schemas
 decomposition:      split wider relation into a narrower relation
 relation:           database table with rows and columns
-functional dependency: contraints between attributes. 
+functional dependency: contraints between attributes.
+trivial dependencies: attribute that depends on itself, or a combination of itself and something else
+superkey:           candidate key or a superset of a candidate key (candidate key + some other attribute)
 if x implies y, then we can infer the value of y when given x for example: personid (x) implies personname (y). but personname (y) does not imply personid(x) - people with the same name have different ids.
 attributes:         columns in a relation
 records (tuples):	  rows in a schema instance
@@ -26,7 +29,8 @@ covering index:	  	an index is covering if it covers the entire query (supplies 
 bplus tree:			    a binary search tree that contains only keys (not kv pairs) where the leaf nodes contain data to be indexed as a linked list
 flush:              write transaction state to persiistent data
 buffer manager:     manages changes written from memory too disk
-
+unavoidable:        a functional dependency is unavoidable if it has a superkey on the left hand side
+redundant:          a functional dependency that can be computed from other functional dependencies (with axioms) are redundant
 
 ``` sql
 SELECT coffeehouse
@@ -59,12 +63,32 @@ If no “good” index exists, a full table scan is preferred!
 - Goal: eliminate redundancy
 - Data integrity, data consistency, easy data manipulation, data organization
 
-### 1nf
+### 1NF
 
 - attributes have primitive data types (no arrays), ie. are atomic
 - attributes have a unique name
 
-### functioncal dependencies
+### 2NF
+
+
+- No non-prime attribute depends on a part of a candidate key
+
+See dictionary
+
+### 3NF
+
+- Each non-prime attribute of a table should depend on every candidate key
+- It should never depend on part of a candidate key
+- It should never depend on other non-prime attributes
+
+It other words, non-key -> non-key violates 3NF
+
+### BCNF
+
+- Every functional dependency in a table must be a dependency on a candidate key
+- Except trivial dependencies
+
+### Functional dependencies
 
 We cannot prove a FD with a schema instance, but we can check if it breaks a FD.
 
